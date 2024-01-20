@@ -1,7 +1,10 @@
 import { Inter } from "next/font/google";
+import { useRouter } from "next/navigation";
 import "./globals.css";
 import { Providers } from "./providers";
 const inter = Inter({ subsets: ["latin"] });
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const metadata = {
   title: "Create Next App",
@@ -12,7 +15,21 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <ToastContainer
+            position="top-right"
+            autoClose={1500}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable={false}
+            pauseOnHover={false}
+            theme="light"
+          />
+          {children}
+        </Providers>
       </body>
     </html>
   );

@@ -25,3 +25,9 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.app{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}

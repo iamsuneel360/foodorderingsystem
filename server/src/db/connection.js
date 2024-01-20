@@ -12,5 +12,4 @@ const connection = async () => {
     console.log(err);
   }
 };
-
 module.exports = connection;

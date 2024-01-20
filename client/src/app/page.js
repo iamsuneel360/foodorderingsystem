@@ -1,9 +1,11 @@
 "use client";
-import Nav from "@/components/navbar/page";
+import Layout from "@/components/layout/page";
 export default function Home() {
   return (
     <div>
-      <Nav />
+      <Layout>
+        <p>This is a main page</p>
+      </Layout>
     </div>
   );
 }

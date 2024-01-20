@@ -4,6 +4,8 @@ app.use(express.json());
 const connection = require("./db/connection");
 require("dotenv").config();
 const port = process.env.PORT;
+const cors = require("cors");
+app.use(cors());
 const userRoute = require("./routes/user");
 app.use(userRoute);
 connection();
