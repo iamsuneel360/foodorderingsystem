@@ -5,6 +5,7 @@ import { Providers } from "./providers";
 const inter = Inter({ subsets: ["latin"] });
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ReduxProvider from "./redux/reduxProvider";
 
 export const metadata = {
   title: "Create Next App",
@@ -15,21 +16,23 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>
-          <ToastContainer
-            position="top-right"
-            autoClose={1500}
-            hideProgressBar
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable={false}
-            pauseOnHover={false}
-            theme="light"
-          />
-          {children}
-        </Providers>
+        <ReduxProvider>
+          <Providers>
+            <ToastContainer
+              position="top-right"
+              autoClose={1500}
+              hideProgressBar
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable={false}
+              pauseOnHover={false}
+              theme="light"
+            />
+            {children}
+          </Providers>
+        </ReduxProvider>
       </body>
     </html>
   );
