@@ -1,11 +1,14 @@
 "use client";
 import Layout from "@/components/layout/page";
-export default function Home() {
+import HeroSection from "@/components/heroSection/page";
+
+const page = () => {
   return (
     <div>
       <Layout>
-        <p>This is a main page</p>
+        <HeroSection />
       </Layout>
     </div>
   );
-}
+};
+export default page;

@@ -3,9 +3,9 @@ import { useRouter } from "next/navigation";
 import "./globals.css";
 import { Providers } from "./providers";
 const inter = Inter({ subsets: ["latin"] });
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ReduxProvider from "./redux/reduxProvider";
+import ReduxProvider from "../redux/reduxProvider";
 
 export const metadata = {
   title: "Create Next App",

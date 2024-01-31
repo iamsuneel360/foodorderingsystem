@@ -35,6 +35,7 @@ const loginUser = async (req, res) => {
         res.json({
           msg: "Login Success",
           token,
+          userDetail,
         });
       } else {
         res.json({
