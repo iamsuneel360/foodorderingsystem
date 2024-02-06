@@ -102,18 +102,6 @@ const SignupForm = () => {
               </p>
             )}
           </div>
-          <div className="relative flex w-full flex-wrap mb-2 md:flex-nowrap gap-4">
-            <Input
-              type="text"
-              label="Role"
-              id="role"
-              name="role"
-              onChange={formik.handleChange}
-              value={formik.values.role}
-              onBlur={formik.handleBlur}
-            />
-            {/* Display any role-specific error here if needed */}
-          </div>
           <button className="bg-green-200 px-4 py-3 rounded-xl" type="submit">
             Submit
           </button>

@@ -15,11 +15,17 @@ export const userSlice = createSlice({
         ...state,
         userDetails,
         token,
+        isLoggedIn: true,
       };
+    },
+    logout: (state, action) => {
+      return{
+        ...initialState
+      }
     },
   },
 });
 
-export const { addUserDetails } = userSlice.actions;
+export const { addUserDetails, logout } = userSlice.actions;
 
 export default userSlice.reducer;

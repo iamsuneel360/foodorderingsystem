@@ -8,6 +8,8 @@ const cors = require("cors");
 app.use(cors());
 const userRoute = require("./routes/user");
 app.use(userRoute);
+const roomRouter = require("./routes/room")
+app.use(roomRouter)
 connection();
 
 app.get("/", (req, res) => {

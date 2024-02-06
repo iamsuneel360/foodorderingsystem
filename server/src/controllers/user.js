@@ -24,31 +24,39 @@ const registerNewUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   try {
-    const userDetail = await User.findOne({ email: req.body.email });
-    if (userDetail) {
+    const userDetails = await User.findOne({ email: req.body.email });
+
+    if (userDetails) {
       const match = await bcrypt.compare(
         req.body.password,
-        userDetail.password
+        userDetails.password
       );
+
       if (match) {
         const token = jwt.sign({ email: req.body.email }, "shhhhh");
         res.json({
-          msg: "Login Success",
+          userDetails,
+          msg: "Login success",
           token,
-          userDetail,
         });
       } else {
-        res.json({
-          msg: "Password Do Not Match",
+        // Provide a generic error message for incorrect password
+        res.status(401).json({
+          msg: "Incorrect email or password",
         });
       }
     } else {
-      res.status(403).json({
-        msg: "Email not found",
+      // Provide a generic error message for invalid email
+      res.status(401).json({
+        msg: "Incorrect email or password",
       });
     }
   } catch (err) {
-    console.log(err);
+    // Log the error for debugging purposes
+    console.error(err);
+    res.status(500).json({
+      msg: "Internal server error",
+    });
   }
 };
 

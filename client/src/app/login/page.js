@@ -24,15 +24,17 @@ const SigninForm = () => {
   const loginUser = async (values) => {
     const res = await fetch("http://localhost:5000/login/", {
       method: "post",
-      headers: { "content-Type": "application/json" },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
     });
     const data = await res.json();
     if (res.status == 200) {
       dispatch(addUserDetails(data));
-      router.push("/login");
+      router.push("/home");
+      dispatch(addUserDetails(data));
+    } else {
+      toast(data.msg);
     }
-    toast(data.msg);
   };
 
   const formik = useFormik({
