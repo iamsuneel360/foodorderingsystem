@@ -1,40 +1,55 @@
-'use client'
-import React, { useEffect, useState } from 'react';
+"use client";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Room from "@/components/room/page";
+import Layout from "@/components/layout/page";
 
 const Page = () => {
-
-  const [rooms, setRooms] = useState([])
+  const [rooms, setRooms] = useState([]);
+  const [loading, setLoading] = useState();
+  const [error, setError] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
-
       try {
-        const { data: response } = await axios.get('http://localhost:5000/rooms');
-        console.log(response);  // Corrected log statement
+        setLoading(true);
+        const { data: response } = await axios.get(
+          "http://localhost:5000/rooms"
+        );
+        console.log(response); // Corrected log statement
         setRooms(response);
+        setLoading(false);
       } catch (error) {
+        setError(true);
         console.error(error.message);
+        setLoading(false);
       }
-
-    }
+    };
 
     fetchData();
   }, []);
 
   return (
-    <div>
-      <h1>Home Page</h1>
-      <h2>Total {rooms.length} rooms</h2>
-      {rooms.map((room, index) => (
-        <div key={index}>
-          <h3>{room.name}</h3>
-          {/* Add other room details if needed */}
+    <Layout>
+      <div className=" container">
+        <div className=" row justify-center">
+          {loading ? (
+            <h1>Loading...</h1>
+          ) : error ? (
+            <h1>Error</h1>
+          ) : (
+            rooms.map((room) => {
+              return (
+                <div className=" md:col-span-9">
+                  <Room room={room} />
+                </div>
+              );
+            })
+          )}
         </div>
-      ))}
-    </div>
-  )
-
+      </div>
+    </Layout>
+  );
 };
 
 export default Page;
