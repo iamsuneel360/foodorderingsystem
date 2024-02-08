@@ -31,8 +31,8 @@ const Page = () => {
 
   return (
     <Layout>
-      <div className=" container">
-        <div className=" row justify-center">
+      <div className=" ">
+        <div className=" ">
           {loading ? (
             <h1>Loading...</h1>
           ) : error ? (
@@ -40,7 +40,7 @@ const Page = () => {
           ) : (
             rooms.map((room) => {
               return (
-                <div className=" md:col-span-9">
+                <div className="">
                   <Room room={room} />
                 </div>
               );

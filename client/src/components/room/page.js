@@ -11,60 +11,61 @@ import {
 } from "@nextui-org/react";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
+import Link from "next/link";
 
 const Room = ({ room }) => {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <div className="flex shadow-md mt-4 w-6/12 mx-auto items-center justify-center ">
-      <div className="flex items-center relative">
-        <div className="-mr-10 mt-2 mb-2">
+    <div className="flex rounded-lg shadow-md mt-4 w-8/12 mx-auto items-center pl-5 relative">
+      <div className="flex relative">
+        <div className="mt-2 mb-2">
           <img
-            className="smallimg -ml-16"
-            src="https://images.oyoroomscdn.com/uploads/hotel_image/56303/medium/597f0e48823f8885.jpg"
+            className="smallimg"
+            src={room.imageurls[0]}
             alt="Picture of the author"
           />
         </div>
-        <div className="-mt-20 font-medium">
+        <div className="ml-3 mt-2 font-medium">
           <h1 className="mb-2">{room.name}</h1>
           <p className="mb-2">Total room: {room.maxcount}</p>
           <p className="mb-2">Phone Number: {room.phonenumber}</p>
           <p className="mb-2">Type: {room.type}</p>
-          <div className="absolute bottom-0 right-0 mb-2 -mr-20">
-            <Button
-              onPress={onOpen}
-              className="bg-black text-white px-10 py-2 rounded-lg"
-            >
-              View Details
-            </Button>
-          </div>
         </div>
       </div>
-      <Modal
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
-        className=" size-max max-w-prose"
-      >
+      <div className=" absolute bottom-0 right-0 mb-2 mr-8">
+        <Link
+          href={`/book/${room._id}`}
+          className="bg-black px-4 text-white py-3 rounded-lg mr-4"
+        >
+          <button>Book Now</button>
+        </Link>
+        <Button
+          onPress={onOpen}
+          className="bg-black px-4 text-white py-3 rounded-lg"
+        >
+          View Details
+        </Button>
+      </div>
+      <Modal isOpen={isOpen} onClose={onClose} className="size-max max-w-prose">
         <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">
-                {room.name}
-              </ModalHeader>
-              <ModalBody>
-                <Carousel>
-                  {room.imageurls.map((url) => {
-                    return <img src={url} alt="images" />;
-                  })}
-                </Carousel>
-                <p> {room.description} </p>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Close
-                </Button>
-              </ModalFooter>
-            </>
-          )}
+          <>
+            <ModalHeader className="flex flex-col gap-1">
+              {room.name}
+            </ModalHeader>
+            <ModalBody>
+              <Carousel>
+                {room.imageurls.map((url, index) => (
+                  <img key={index} src={url} alt="images" />
+                ))}
+              </Carousel>
+              <p>{room.description}</p>
+            </ModalBody>
+            <ModalFooter>
+              <Button color="danger" variant="light" onClick={onClose}>
+                Close
+              </Button>
+            </ModalFooter>
+          </>
         </ModalContent>
       </Modal>
     </div>
