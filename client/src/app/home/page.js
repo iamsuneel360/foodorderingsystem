@@ -34,7 +34,7 @@ const Page = () => {
       <div className=" ">
         <div className=" ">
           {loading ? (
-            <h1>Loading...</h1>
+            <h1>Loading....</h1>
           ) : error ? (
             <h1>Error</h1>
           ) : (
