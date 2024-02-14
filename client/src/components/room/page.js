@@ -13,7 +13,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from "react-responsive-carousel";
 import Link from "next/link";
 
-const Room = ({ room }) => {
+const Room = ({ room, fromdate, todate }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <div className="flex rounded-lg shadow-md mt-4 w-8/12 mx-auto items-center pl-5 relative">
@@ -34,7 +34,8 @@ const Room = ({ room }) => {
       </div>
       <div className=" absolute bottom-0 right-0 mb-2 mr-8">
         <Link
-          href={`/book/${room._id}`}
+          href={`/book/${room._id}/${fromdate}/${todate}`}
+          // href={`/book/${room._id}/${fromdate}`}
           className="bg-black px-4 text-white py-3 rounded-lg mr-4"
         >
           <button>Book Now</button>
