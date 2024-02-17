@@ -3,19 +3,21 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Nav from "@/components/navbar/page";
 import moment from "moment";
+import { useSelector } from "react-redux";
 
 const Page = ({ params }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
   const [room, setRoom] = useState();
+  const { userDetails } = useSelector((state) => state.user);
 
   //   const roomid = params.booking;
-  const fromdate = moment(params.formid, "DD-MM-YYYY");
+  const fromdate = moment(params.fromid, "DD-MM-YYYY");
   const todate = moment(params.toid, "DD-MM-YYYY");
 
   const totaldays = moment.duration(todate.diff(fromdate)).asDays() + 1;
-  //   console.log(totaldays);
-
+  // const totalamount = room ? totaldays * room.price : 0;
+  const [totalamount, setTotalamount] = useState();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -25,6 +27,7 @@ const Page = ({ params }) => {
           { roomid: params.booking }
         );
         // console.log(response); // Corrected log statement
+        setTotalamount(response.price * totaldays);
         setRoom(response);
         setLoading(false);
       } catch (error) {
@@ -36,6 +39,26 @@ const Page = ({ params }) => {
 
     fetchData();
   }, []);
+
+  async function bookRoom() {
+    const bookingDetails = {
+      room,
+      userid: userDetails._id,
+      fromdate,
+      todate,
+      totalamount,
+      totaldays,
+    };
+
+    try {
+      const result = await axios.post(
+        "http://localhost:5000/bookroom",
+        bookingDetails
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <div>
@@ -60,8 +83,8 @@ const Page = ({ params }) => {
                   <b>
                     <h1 className="mt-6">Booking Details</h1>
                     <hr />
-                    <p className=" mt-3">Name: Biraj</p>
-                    <p className=" mt-3">From Date: {params.formid}</p>
+                    <p className=" mt-3">Name: {userDetails.userName}</p>
+                    <p className=" mt-3">From Date: {params.fromid}</p>
                     <p className=" mt-3">To Date: {params.toid} </p>
                     <p className=" mt-3">Max Count: {room.maxcount}</p>
                   </b>
@@ -73,11 +96,14 @@ const Page = ({ params }) => {
                     <hr />
                     <p className=" mt-3">Total Days: {totaldays}</p>
                     <p className=" mt-3">Rent per day: {room.price}</p>
-                    <p className=" mt-3">Total Amount: 3000</p>
+                    <p className=" mt-3">Total Amount: {totalamount} </p>
                   </b>
                 </div>
                 <div>
-                  <button className="bg-black px-3 mt-3 text-white py-1 rounded-lg">
+                  <button
+                    className="bg-black px-3 mt-3 text-white py-1 rounded-lg"
+                    onClick={bookRoom}
+                  >
                     Pay Now
                   </button>
                 </div>

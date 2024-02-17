@@ -23,5 +23,4 @@ const getroombyid = async (req, res) => {
   }
 };
 
-
 module.exports = { getallrooms, getroombyid };

@@ -8,9 +8,11 @@ const cors = require("cors");
 app.use(cors());
 const userRoute = require("./routes/user");
 app.use(userRoute);
-const roomRouter = require("./routes/room")
-app.use(roomRouter)
+const roomRouter = require("./routes/room");
+app.use(roomRouter);
 connection();
+const bookingRouter = require("./routes/booking");
+app.use(bookingRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
