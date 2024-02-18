@@ -33,13 +33,15 @@ const Room = ({ room, fromdate, todate }) => {
         </div>
       </div>
       <div className=" absolute bottom-0 right-0 mb-2 mr-8">
-        <Link
-          href={`/book/${room._id}/${fromdate}/${todate}`}
-          // href={`/book/${room._id}/${fromdate}`}
-          className="bg-black px-4 text-white py-3 rounded-lg mr-4"
-        >
-          <button>Book Now</button>
-        </Link>
+        {fromdate && todate && (
+          <Link
+            href={`/book/${room._id}/${fromdate}/${todate}`}
+            className="bg-black px-4 text-white py-3 rounded-lg mr-4"
+          >
+            <button>Book Now</button>
+          </Link>
+        )}
+
         <Button
           onPress={onOpen}
           className="bg-black px-4 text-white py-3 rounded-lg"
