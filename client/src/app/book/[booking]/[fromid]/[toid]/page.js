@@ -4,6 +4,7 @@ import axios from "axios";
 import Nav from "@/components/navbar/page";
 import moment from "moment";
 import { useSelector } from "react-redux";
+import StripeCheckout from "react-stripe-checkout";
 
 const Page = ({ params }) => {
   const [loading, setLoading] = useState(true);
@@ -40,7 +41,8 @@ const Page = ({ params }) => {
     fetchData();
   }, []);
 
-  async function bookRoom() {
+  async function onToken(token) {
+    console.log(token);
     const bookingDetails = {
       room,
       userid: userDetails._id,
@@ -48,6 +50,7 @@ const Page = ({ params }) => {
       todate,
       totalamount,
       totaldays,
+      token,
     };
 
     try {
@@ -100,12 +103,22 @@ const Page = ({ params }) => {
                   </b>
                 </div>
                 <div>
-                  <button
+                  {/* <button
                     className="bg-black px-3 mt-3 text-white py-1 rounded-lg"
                     onClick={bookRoom}
                   >
                     Pay Now
-                  </button>
+                  </button> */}
+                  <StripeCheckout
+                    amount={totalamount * 100}
+                    token={onToken}
+                    currency="NPR"
+                    stripeKey="pk_test_51NvihqSAIZdDIMkwP0ErwdY50kyg0XvdbRuce837kaazzljwIOxyUFj7sFCcQJ99HlHAExFxC5syjPYpyjpDW81800nEoA1Qqt"
+                  >
+                    <button className="bg-black px-3 mt-3 text-white py-1 rounded-lg">
+                      Pay Now
+                    </button>
+                  </StripeCheckout>
                 </div>
               </div>
             </div>
